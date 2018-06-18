@@ -47,7 +47,7 @@ int main(int argc, char* argv[]){
     }
 
     /* Initialize cold as gaussian */
-    float sigmax = 0.3; float sigmay = 0.3;
+    float sigmax = 0.2; float sigmay = 0.2;
     float x0 = L/2; float y0 = L/2;
     for (int i=0;i<N;i++) {
         for (int j=0;j<N;j++) {
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]){
     for (int n=0;n<NT;n++){
         cout << "Step " << n << "/" << NT <<endl;
         /* Write to file */
-        if (n%50 == 0){ //Control write frequency
+        if (n%100 == 0){ //Control write frequency
             stringstream fname;
             fname << "array_" << setw(4) << setfill('0') << n;
             ofstream myfile (fname.str().c_str());

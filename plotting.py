@@ -9,4 +9,6 @@ for filename in os.listdir('.'):
     if filename.startswith("array"): 
         data = np.loadtxt(filename)
         plt.imshow(data,cmap="plasma")
-        plt.show()
+        plt.colorbar()
+        plt.savefig('./figures/'+filename+'.png')
+        plt.close()
