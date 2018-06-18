@@ -28,7 +28,7 @@ double lax(double up, double down, double left, double right, double center,
     double firstterm = 0.25*(up+down+left+right);
     double alpha=deltat/2/deltax;
     double secondterm = alpha*(U*(right-left)+V*(up-down));
-    double val = firstterm+secondterm;
+    double val = firstterm-secondterm;
     return val;
 }
 
