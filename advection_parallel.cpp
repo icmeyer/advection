@@ -38,6 +38,8 @@ int main(int argc, char* argv[]){
     double start_time = omp_get_wtime();
     int N=atof(argv[1]); int NT=atof(argv[2]); double L=atof(argv[3]);
     double T=atof(argv[4]); double U=atof(argv[5]); double V=atof(argv[6]);
+    int nthreads=atof(argv[7]);
+    omp_set_num_threads(nthreads);
     float cold[400][400]; //Using knowledge of array size, bad!
     float cnew[400][400];
     float deltax = L/N;
@@ -82,6 +84,7 @@ int main(int argc, char* argv[]){
         }
 
         /*Update c to n+1 */
+#pragma omp parallel for
         for (int i=0;i<N;i++) {
             for (int j=0;j<N;j++) {
                 /*Apply periodic boundary conditions*/
@@ -108,9 +111,9 @@ int main(int argc, char* argv[]){
 
     }
     double time = omp_get_wtime() - start_time;
-    ofstream myfile ("performance_serial");
+    ofstream myfile ("performance_parallel");
     if (myfile.is_open()){
-        myfile << "Serial took "<< time;
+        myfile << "Parallel took "<< time;
     }
     else cout << "Unable to open file";
 }
