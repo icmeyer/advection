@@ -52,7 +52,7 @@ int main(int argc, char* argv[]){
     for (int i=0;i<N;i++) {
         for (int j=0;j<N;j++) {
             float x = deltax*i+0.5*deltax;
-            float y = deltay*i+0.5*deltay;
+            float y = deltay*j+0.5*deltay;
             cold[i][j] = gauss2d(x,y,x0,y0,sigmax,sigmay);
         }
     }
@@ -60,20 +60,22 @@ int main(int argc, char* argv[]){
     for (int n=0;n<NT;n++){
         cout << "Step " << n << "/" << NT <<endl;
         /* Write to file */
-        stringstream fname;
-        fname << "array_" << setw(4) << setfill('0') << n;
-        ofstream myfile (fname.str().c_str());
-        if (myfile.is_open()){
-            for (int i=0;i<N;i++) {
-                for (int j=0;j<N;j++) {
-                    myfile << cold[i][j];
-                    if (j == N-1){
-                        myfile << endl;
+        if (n%50 == 0){ //Control write frequency
+            stringstream fname;
+            fname << "array_" << setw(4) << setfill('0') << n;
+            ofstream myfile (fname.str().c_str());
+            if (myfile.is_open()){
+                for (int i=0;i<N;i++) {
+                    for (int j=0;j<N;j++) {
+                        myfile << cold[i][j] << " ";
+                        if (j == N-1){
+                            myfile << endl;
+                        }
                     }
                 }
             }
+            else cout << "Unable to open file";
         }
-        else cout << "Unable to open file";
 
         /*Update c to n+1 */
         for (int i=0;i<N;i++) {
